@@ -44,7 +44,7 @@ namespace ConsoleUI
             //brandManager.Add(brand3);
             //brandManager.Add(brand4);
             //brandManager.Add(brand5);
-            foreach (var brand in brandManager.GetAll())
+            foreach (var brand in brandManager.GetAll().Data)
             {
                 Console.WriteLine(brand.Name);
             }
@@ -58,8 +58,9 @@ namespace ConsoleUI
             //new Car { Id = 4, BrandId = 5, ColorId = 5, DailyPrice = 3000, Description = "Luxury car for people who wants a ride with high standards", ModelYear = 2017 },
             //Car carToUpdate = new Car { BrandId = 2, ColorId = 4, DailyPrice = 2000, Description = "Another nice sedan which provides decent comfort and performance", ModelYear = 2015 };
             CarManager carManager = new CarManager(new EfCarDal());
-            foreach (var car in carManager.GetCarDetails())
+            foreach (var car in carManager.GetCarDetails().Data)
             {
+                //CarManager tamam, diger managerlari refactor et.
                 Console.WriteLine(car.BrandName + "/" + car.ColorName + "/" + car.DailyPrice + "/" + car.Description);
             }
 

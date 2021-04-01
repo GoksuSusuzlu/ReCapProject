@@ -2,6 +2,8 @@
 using DataAccess.Abstract;
 using Entities.Concrete;
 using Entities.DTOs;
+using RecapCore.Utility.Results.Abstract;
+using RecapCore.Utility.Results.Concrete;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -15,78 +17,81 @@ namespace Business.Concrete
         {
             _carDal = carDal;
         }
-        public void Add(Car car)
+        public IResult Add(Car car)
         {
             //If-else kontrolleri, yetki kontrolu vs.
             if(car.Description.Length >= 5 && car.DailyPrice > 0)
             {
                 _carDal.Add(car);
+                return new SuccessResult("Car added successfully.");
             }
             else
             {
-                throw new Exception("You cannot add a car which has e description shorter than 5 characters or a dailyprice of 0");
+                return new ErrorResult("You cannot add a car which has e description shorter than 5 characters or a dailyprice of 0");
             }
         }
 
-        public void Delete(Car car)
+        public IResult Delete(Car car)
         {
             //If-else kontrolleri, yetki kontrolu vs.
             _carDal.Delete(car);
+            return new SuccessResult("Car deleted successfully.");
         }
 
-        public List<Car> GetAll()
+        public IDataResult<List<Car>> GetAll()
         {
             //If-else kontrolleri, yetki kontrolu vs.
-            return _carDal.GetAll();
+            return new SuccessDataResult<List<Car>>(_carDal.GetAll());
         }
 
-        public List<Car> GetByBrandId(int brandId)
+        public IDataResult<List<Car>> GetByBrandId(int brandId)
         {
-            return _carDal.GetAll(c => c.BrandId == brandId);
+            return new SuccessDataResult<List<Car>>(_carDal.GetAll(c => c.BrandId == brandId), "Cars listed by brand ID."); 
         }
 
-        public List<Car> GetByColor(int colorId)
+        public IDataResult<List<Car>> GetByColor(int colorId)
         {
-            return _carDal.GetAll(c => c.ColorId == colorId);
+            return new SuccessDataResult<List<Car>>(_carDal.GetAll(c => c.ColorId == colorId), "Cars listed by color ID."); 
         }
 
-        public List<Car> GetByDailyPrice(decimal min, decimal max)
+        public IDataResult<List<Car>> GetByDailyPrice(decimal min, decimal max)
         {
-            return _carDal.GetAll(c => c.DailyPrice >= min && c.DailyPrice <= max);
+            return new SuccessDataResult<List<Car>>(_carDal.GetAll(c => c.DailyPrice >= min && c.DailyPrice <= max), "Cars listed by their daily prices.");
         }
 
-        public Car GetByDescription(string description)
+        public IDataResult<Car> GetByDescription(string description)
         {
-            return _carDal.Get(c => c.Description == description);
+            return new SuccessDataResult<Car>(_carDal.Get(c => c.Description == description));
         }
 
-        public Car GetById(int id)
+        public IDataResult<Car> GetById(int id)
         {
             //If-else kontrolleri, yetki kontrolu vs.
-            return _carDal.Get(c=> c.CarId == id);
+            return new SuccessDataResult<Car>(_carDal.Get(c => c.CarId == id));
         }
 
 
-        public List<Car> GetByModelYear(int modelYear)
+        public IDataResult<List<Car>> GetByModelYear(int modelYear)
         {
-            return _carDal.GetAll(c => c.ModelYear == modelYear);
+            return new SuccessDataResult<List<Car>>(_carDal.GetAll(c => c.ModelYear == modelYear)); 
         }
 
-        public List<CarDetailDto> GetCarDetails()
+        public IDataResult<List<CarDetailDto>> GetCarDetails()
         {
-            return _carDal.GetCarDetails();
+            return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetails()); 
         }
 
-        public void Update(Car car)
+        public IResult Update(Car car)
         {
             //If-else kontrolleri, yetki kontrolu vs.
             if (car.Description.Length >= 5 && car.DailyPrice > 0)
             {
                 _carDal.Update(car);
+                return new SuccessResult("Car updated successfully");
             }
             else
             {
-                throw new Exception("You cannot add a car which has e description shorter than 5 characters or a dailyprice of 0");
+                return new ErrorResult("You cannot add a car which has e description shorter than 5 characters or a dailyprice of 0");
             }
         }
     }
