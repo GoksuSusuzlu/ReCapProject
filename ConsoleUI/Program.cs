@@ -10,10 +10,54 @@ namespace ConsoleUI
     {
         static void Main(string[] args)
         {
-            CarTest();
+            //CarTest();
             //BrandTest();
             //ColorTest();
+            //UserTest();
+            //CustomerTest();
+            //RentalTest();
 
+        }
+
+        private static void RentalTest()
+        {
+            RentalManager rentalManager = new RentalManager(new EfRentalDal());
+            //rentalManager.Add(new Rental { CarId = 1, RentDate = DateTime.Now, CustomerId = 3, ReturnDate = new DateTime(2021,4,4,21,04,23)}); // burdan devamke
+            foreach (var rental in rentalManager.GetRentalDetails().Data)
+            {
+                Console.WriteLine(rental.CompanyName);
+            }
+        }
+
+        private static void CustomerTest()
+        {
+            CustomerManager customerManager = new CustomerManager(new EfCustomerDal());
+            customerManager.Add(new Customer { UserId = 1, CompanyName = "Susuzlu Ltd. Sti." });
+            customerManager.Add(new Customer { UserId = 2, CompanyName = "AcunMedya" });
+            foreach (var customer in customerManager.GetAll().Data)
+            {
+                Console.WriteLine(customer.CompanyName);
+            }
+        }
+
+        private static void UserTest()
+        {
+            UserManager userManager = new UserManager(new EfUserDal());
+            User user = new User { FirstName = "İbrahim", LastName = "Tatlıses", Email = "ibo@gmail.com", Password = "1234" };
+            userManager.Add(user);
+            user.Email = "ibo@hotmail.com";
+            userManager.Update(user);
+            //userManager.Add(user);
+            //userManager.Add(new User { FirstName = "Acun", LastName = "Ilıcalı", Email = "acun.ilicali@hotmail.com", Password = "1234" });
+            //userManager.Add(new User { FirstName = "Ali", LastName = "Ağaoğlu", Email = "ali.agaoglu@hotmail.com", Password = "1234" });
+            //userManager.Add(new User { FirstName = "Harun", LastName = "Sinanoğlu", Email = "harunsinanoglu@hotmail.com", Password = "1234" });
+            //userManager.Add(new User { FirstName = "İsmet Arif", LastName = "Karasu", Email = "akbaba.ismet@hotmail.com", Password = "1234" });
+
+            foreach (var rentalUser in userManager.GetAll().Data)
+            {
+
+                Console.WriteLine(rentalUser.FirstName + " " + rentalUser.LastName + "----" + rentalUser.Email);
+            }
         }
 
         private static void ColorTest()

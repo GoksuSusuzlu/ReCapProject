@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Business.Constants;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using Entities.DTOs;
@@ -23,11 +24,11 @@ namespace Business.Concrete
             if(car.Description.Length >= 5 && car.DailyPrice > 0)
             {
                 _carDal.Add(car);
-                return new SuccessResult("Car added successfully.");
+                return new SuccessResult(Messages.CarAdded);
             }
             else
             {
-                return new ErrorResult("You cannot add a car which has e description shorter than 5 characters or a dailyprice of 0");
+                return new ErrorResult(Messages.CarNameInvalid);
             }
         }
 
@@ -35,7 +36,7 @@ namespace Business.Concrete
         {
             //If-else kontrolleri, yetki kontrolu vs.
             _carDal.Delete(car);
-            return new SuccessResult("Car deleted successfully.");
+            return new SuccessResult(Messages.CarDeleted);
         }
 
         public IDataResult<List<Car>> GetAll()
@@ -46,17 +47,17 @@ namespace Business.Concrete
 
         public IDataResult<List<Car>> GetByBrandId(int brandId)
         {
-            return new SuccessDataResult<List<Car>>(_carDal.GetAll(c => c.BrandId == brandId), "Cars listed by brand ID."); 
+            return new SuccessDataResult<List<Car>>(_carDal.GetAll(c => c.BrandId == brandId), Messages.CarsListed); 
         }
 
         public IDataResult<List<Car>> GetByColor(int colorId)
         {
-            return new SuccessDataResult<List<Car>>(_carDal.GetAll(c => c.ColorId == colorId), "Cars listed by color ID."); 
+            return new SuccessDataResult<List<Car>>(_carDal.GetAll(c => c.ColorId == colorId), Messages.CarsListed); 
         }
 
         public IDataResult<List<Car>> GetByDailyPrice(decimal min, decimal max)
         {
-            return new SuccessDataResult<List<Car>>(_carDal.GetAll(c => c.DailyPrice >= min && c.DailyPrice <= max), "Cars listed by their daily prices.");
+            return new SuccessDataResult<List<Car>>(_carDal.GetAll(c => c.DailyPrice >= min && c.DailyPrice <= max), Messages.CarsListed);
         }
 
         public IDataResult<Car> GetByDescription(string description)
@@ -78,7 +79,7 @@ namespace Business.Concrete
 
         public IDataResult<List<CarDetailDto>> GetCarDetails()
         {
-            return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetails()); 
+            return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetails().Data); 
         }
 
         public IResult Update(Car car)
@@ -87,11 +88,11 @@ namespace Business.Concrete
             if (car.Description.Length >= 5 && car.DailyPrice > 0)
             {
                 _carDal.Update(car);
-                return new SuccessResult("Car updated successfully");
+                return new SuccessResult(Messages.CarUpdated);
             }
             else
             {
-                return new ErrorResult("You cannot add a car which has e description shorter than 5 characters or a dailyprice of 0");
+                return new ErrorResult(Messages.CarNameInvalid);
             }
         }
     }

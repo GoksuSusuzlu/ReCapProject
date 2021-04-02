@@ -1,6 +1,7 @@
 ﻿using DataAccess.Abstract;
 using Entities.Concrete;
 using Entities.DTOs;
+using RecapCore.Utility.Results.Abstract;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -73,6 +74,11 @@ namespace DataAccess.Concrete
             carToUpdate.ColorId = car.ColorId;
             carToUpdate.DailyPrice = car.DailyPrice;
             carToUpdate.Description = car.Description;
+        }
+
+        IDataResult<List<CarDetailDto>> ICarDal.GetCarDetails()
+        {
+            throw new NotImplementedException();
         }
     }
 }
