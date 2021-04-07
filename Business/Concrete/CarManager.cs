@@ -1,8 +1,11 @@
 ﻿using Business.Abstract;
 using Business.Constants;
+using Business.ValidationRules.FluentValidation;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using Entities.DTOs;
+using FluentValidation;
+using RecapCore.CrossCuttingConcerns.Validation;
 using RecapCore.Utility.Results.Abstract;
 using RecapCore.Utility.Results.Concrete;
 using System;
@@ -21,15 +24,10 @@ namespace Business.Concrete
         public IResult Add(Car car)
         {
             //If-else kontrolleri, yetki kontrolu vs.
-            if(car.Description.Length >= 5 && car.DailyPrice > 0)
-            {
-                _carDal.Add(car);
-                return new SuccessResult(Messages.CarAdded);
-            }
-            else
-            {
-                return new ErrorResult(Messages.CarNameInvalid);
-            }
+            ValidationTool.Validate(new CarValidator(), car);
+
+            _carDal.Add(car);
+            return new SuccessResult(Messages.CarAdded);
         }
 
         public IResult Delete(Car car)
@@ -85,15 +83,11 @@ namespace Business.Concrete
         public IResult Update(Car car)
         {
             //If-else kontrolleri, yetki kontrolu vs.
-            if (car.Description.Length >= 5 && car.DailyPrice > 0)
-            {
-                _carDal.Update(car);
-                return new SuccessResult(Messages.CarUpdated);
-            }
-            else
-            {
-                return new ErrorResult(Messages.CarNameInvalid);
-            }
+
+            ValidationTool.Validate(new CarValidator(), car);
+
+            _carDal.Update(car);
+            return new SuccessResult(Messages.CarUpdated);
         }
     }
 }
