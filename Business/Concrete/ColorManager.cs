@@ -1,7 +1,9 @@
 ﻿using Business.Abstract;
 using Business.Constants;
+using Business.ValidationRules.FluentValidation;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using RecapCore.Aspects.Autofac.Validation;
 using RecapCore.Utility.Results.Abstract;
 using RecapCore.Utility.Results.Concrete;
 using System;
@@ -18,7 +20,7 @@ namespace Business.Concrete
         {
             _colordal = colordal;
         }
-
+        [ValidationAspect(typeof(ColorValidator))]
         public IResult Add(Color color)
         {
             _colordal.Add(color);
@@ -41,6 +43,7 @@ namespace Business.Concrete
             return new SuccessDataResult<Color>(_colordal.Get(p => p.Id == id));
         }
 
+        [ValidationAspect(typeof(ColorValidator))]
         public IResult Update(Color color)
         {
             _colordal.Update(color);

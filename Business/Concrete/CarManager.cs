@@ -5,6 +5,7 @@ using DataAccess.Abstract;
 using Entities.Concrete;
 using Entities.DTOs;
 using FluentValidation;
+using RecapCore.Aspects.Autofac.Validation;
 using RecapCore.CrossCuttingConcerns.Validation;
 using RecapCore.Utility.Results.Abstract;
 using RecapCore.Utility.Results.Concrete;
@@ -21,10 +22,11 @@ namespace Business.Concrete
         {
             _carDal = carDal;
         }
+
+        [ValidationAspect(typeof(CarValidator))]
         public IResult Add(Car car)
         {
             //If-else kontrolleri, yetki kontrolu vs.
-            ValidationTool.Validate(new CarValidator(), car);
 
             _carDal.Add(car);
             return new SuccessResult(Messages.CarAdded);
@@ -79,12 +81,10 @@ namespace Business.Concrete
         {
             return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetails().Data); 
         }
-
+        [ValidationAspect(typeof(CarValidator))]
         public IResult Update(Car car)
         {
             //If-else kontrolleri, yetki kontrolu vs.
-
-            ValidationTool.Validate(new CarValidator(), car);
 
             _carDal.Update(car);
             return new SuccessResult(Messages.CarUpdated);

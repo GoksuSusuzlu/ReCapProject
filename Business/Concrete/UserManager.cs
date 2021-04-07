@@ -1,6 +1,8 @@
 ﻿using Business.Abstract;
+using Business.ValidationRules.FluentValidation;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using RecapCore.Aspects.Autofac.Validation;
 using RecapCore.Utility.Results.Abstract;
 using RecapCore.Utility.Results.Concrete;
 using System;
@@ -17,7 +19,7 @@ namespace Business.Concrete
         {
             _userDal = userDal;
         }
-
+        [ValidationAspect(typeof(UserValidator))]
         public IResult Add(User user)
         {
             _userDal.Add(user);
@@ -49,7 +51,7 @@ namespace Business.Concrete
         {
             return new SuccessDataResult<User>(_userDal.Get(u => u.Id == id));
         }
-
+        [ValidationAspect(typeof(RentalValidator))]
         public IResult Update(User user)
         {
             _userDal.Update(user);
