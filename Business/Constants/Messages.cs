@@ -37,5 +37,13 @@ namespace Business.Constants
         public static string CarNotReturned = "The car is not returned yet.";
 
         public static string CarRented = "The car rented successfully";
+
+        public static string CarImageLimitExceeded = "Car image limit is exceeded.";
+
+        public static string FailedToUploadImage = "Failed to upload file.";
+
+        public static string CarImageNotFound = "Car image not found.";
+
+        public static string FailedToDeleteImage = "Failed to delete image.";
     }
 }
