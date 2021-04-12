@@ -1,5 +1,7 @@
-﻿using System;
+﻿using RecapCore.Entities.Concrete;
+using System;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using System.Text;
 
 namespace Business.Constants
@@ -45,5 +47,19 @@ namespace Business.Constants
         public static string CarImageNotFound = "Car image not found.";
 
         public static string FailedToDeleteImage = "Failed to delete image.";
+
+        public static string AuthorizationDenied = "You are not authorized for this operation.";
+
+        public static string UserRegistered = "User registered successfully.";
+
+        public static string UserNotFound = "User not found.";
+
+        public static string PasswordError = "Password error.";
+
+        public static string SuccessfulLogin = "Login successful.";
+
+        public static string UserAlreadyExists = "User already exists.";
+
+        public static string AccessTokenCreated = "Acces token created successfuly.";
     }
 }

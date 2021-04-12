@@ -1,5 +1,6 @@
-﻿using Entities.Concrete;
+﻿
 using FluentValidation;
+using RecapCore.Entities.Concrete;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,10 +18,6 @@ namespace Business.ValidationRules.FluentValidation
             RuleFor(u => u.LastName).MinimumLength(3);
             RuleFor(u => u.Email).NotEmpty();
             RuleFor(u => u.Email).EmailAddress().WithMessage("Invalid email address");
-            RuleFor(u => u.Password).NotEmpty();
-            RuleFor(u => u.Password).MinimumLength(6);
-            RuleFor(u => u.Password).Must(validPassword).WithMessage("Incorrect password format");
-
         }
 
         private bool validPassword(string arg)

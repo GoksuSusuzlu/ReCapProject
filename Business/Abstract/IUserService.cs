@@ -1,4 +1,5 @@
 ﻿using Entities.Concrete;
+using RecapCore.Entities.Concrete;
 using RecapCore.Utility.Results.Abstract;
 using System;
 using System.Collections.Generic;
@@ -15,7 +16,8 @@ namespace Business.Abstract
         IDataResult<List<User>> GetByFirstName(string firstName);
         IDataResult<User> GetById(int id);
         IDataResult<User> GetByEmail(string email);
-        
+        List<OperationClaim> GetClaims(User user);
+
 
     }
 }

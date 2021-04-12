@@ -43,10 +43,10 @@ namespace ConsoleUI
         private static void UserTest()
         {
             UserManager userManager = new UserManager(new EfUserDal());
-            User user = new User { FirstName = "İbrahim", LastName = "Tatlıses", Email = "ibo@gmail.com", Password = "1234" };
-            userManager.Add(user);
-            user.Email = "ibo@hotmail.com";
-            userManager.Update(user);
+            //User user = new User { FirstName = "İbrahim", LastName = "Tatlıses", Email = "ibo@gmail.com", Password = "1234" };
+            //userManager.Add(user);
+            //user.Email = "ibo@hotmail.com";
+            //userManager.Update(user);
             //userManager.Add(user);
             //userManager.Add(new User { FirstName = "Acun", LastName = "Ilıcalı", Email = "acun.ilicali@hotmail.com", Password = "1234" });
             //userManager.Add(new User { FirstName = "Ali", LastName = "Ağaoğlu", Email = "ali.agaoglu@hotmail.com", Password = "1234" });

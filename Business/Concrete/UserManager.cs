@@ -1,8 +1,8 @@
 ﻿using Business.Abstract;
 using Business.ValidationRules.FluentValidation;
 using DataAccess.Abstract;
-using Entities.Concrete;
 using RecapCore.Aspects.Autofac.Validation;
+using RecapCore.Entities.Concrete;
 using RecapCore.Utility.Results.Abstract;
 using RecapCore.Utility.Results.Concrete;
 using System;
@@ -46,7 +46,10 @@ namespace Business.Concrete
         {
             return new SuccessDataResult<List<User>>(_userDal.GetAll(u => u.FirstName == firstName));
         }
-
+        public List<OperationClaim> GetClaims(User user)
+        {
+            return _userDal.GetClaims(user);
+        }
         public IDataResult<User> GetById(int id)
         {
             return new SuccessDataResult<User>(_userDal.Get(u => u.Id == id));
