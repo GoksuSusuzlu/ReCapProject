@@ -1,4 +1,5 @@
 ﻿using Castle.DynamicProxy;
+using RecapCore.Aspects.Autofac.Performance;
 using RecapCore.Utility.Interceptors;
 using System;
 using System.Collections.Generic;
@@ -18,6 +19,8 @@ namespace RecapCore.Utility.Interceptors
             var methodAttributes = type.GetMethod(method.Name)
                 .GetCustomAttributes<MethodInterceptionBaseAttribute>(true);
             classAttributes.AddRange(methodAttributes);
+            //Aspects added here will work in the whole program and are not required to be called on top of classes.
+            classAttributes.Add(new PerformanceAspect(5));
 
             return classAttributes.OrderBy(x => x.Priority).ToArray();
         }

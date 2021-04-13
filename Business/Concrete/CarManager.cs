@@ -6,6 +6,7 @@ using DataAccess.Abstract;
 using Entities.Concrete;
 using Entities.DTOs;
 using FluentValidation;
+using RecapCore.Aspects.Autofac.Caching;
 using RecapCore.Aspects.Autofac.Validation;
 using RecapCore.CrossCuttingConcerns.Validation;
 using RecapCore.Utility.Results.Abstract;
@@ -23,7 +24,7 @@ namespace Business.Concrete
         {
             _carDal = carDal;
         }
-        [SecuredOperation("admin")]
+        [SecuredOperation("car.add")]
         [ValidationAspect(typeof(CarValidator))]
         public IResult Add(Car car)
         {
@@ -40,6 +41,7 @@ namespace Business.Concrete
             return new SuccessResult(Messages.CarDeleted);
         }
 
+        [CacheAspect]
         public IDataResult<List<Car>> GetAll()
         {
             //If-else kontrolleri, yetki kontrolu vs.
