@@ -39,6 +39,7 @@ namespace WebAPI
         {
             //Autofac, Ninject, CastleWindsor, StructureMap, LightInject, DryInject --> IoC Container
             services.AddControllers();
+            services.AddCors();
             //services.AddSingleton<ICarService, CarManager>();//Implementing simple IoC, initialize it with the given concrete class wherever an object is declared as an interface.
             //services.AddSingleton<ICarDal, EfCarDal>();
             //services.AddSingleton<IBrandService, BrandManager>();
@@ -51,7 +52,6 @@ namespace WebAPI
             //services.AddSingleton<IRentalDal, EfRentalDal>();
             //services.AddSingleton<IUserService, UserManager>();
             //services.AddSingleton<IUserDal, EfUserDal>();
-            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             var tokenOptions = Configuration.GetSection("TokenOptions").Get<TokenOptions>();
 
@@ -87,6 +87,8 @@ namespace WebAPI
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors(builder => builder.WithOrigins("http://localhost:4200").AllowAnyHeader());
 
             app.UseAuthentication();
 
