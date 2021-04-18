@@ -21,9 +21,8 @@ namespace DataAccess.Concrete.EntityFramework
                 var result = from c in context.Cars
                              join clr in context.Colors on c.ColorId equals clr.Id 
                              join b in context.Brands on c.BrandId equals b.Id
-                             join cimg in context.CarImages on c.CarId equals cimg.CarId
                              select new CarDetailDto { CarId = c.CarId, BrandName = b.Name, ColorName = clr.Name, DailyPrice = c.DailyPrice, 
-                                                       Description = c.Description, ImagePath = cimg.ImagePath, BrandId = c.BrandId };
+                                                       Description = c.Description, BrandId = c.BrandId };
 
                 return new SuccessDataResult<List<CarDetailDto>>(result.ToList());
             }
@@ -36,7 +35,6 @@ namespace DataAccess.Concrete.EntityFramework
                 var result = from c in context.Cars
                              join clr in context.Colors on c.ColorId equals clr.Id
                              join b in context.Brands on c.BrandId equals b.Id
-                             join cimg in context.CarImages on c.CarId equals cimg.CarId
                              where c.BrandId == brandId
                              select new CarDetailDto
                              {
@@ -45,13 +43,36 @@ namespace DataAccess.Concrete.EntityFramework
                                  ColorName = clr.Name,
                                  DailyPrice = c.DailyPrice,
                                  Description = c.Description,
-                                 ImagePath = cimg.ImagePath,
                                  BrandId = c.BrandId,
                                  ColorId = c.ColorId
                              };
                              
 
                 return new SuccessDataResult<List<CarDetailDto>>(result.ToList());
+            }
+        }
+
+        public IDataResult<CarDetailDto> GetCarDetailsByCarId(int carId)
+        {
+            using (RecapContext context = new RecapContext())
+            {
+                var result = from c in context.Cars
+                             join clr in context.Colors on c.ColorId equals clr.Id
+                             join b in context.Brands on c.BrandId equals b.Id
+                             where c.CarId == carId
+                             select new CarDetailDto
+                             {
+                                 CarId = c.CarId,
+                                 BrandName = b.Name,
+                                 ColorName = clr.Name,
+                                 DailyPrice = c.DailyPrice,
+                                 Description = c.Description,
+                                 BrandId = c.BrandId,
+                                 ColorId = c.ColorId
+                             };
+
+
+                return new SuccessDataResult<CarDetailDto>(result.SingleOrDefault());
             }
         }
 
@@ -62,7 +83,6 @@ namespace DataAccess.Concrete.EntityFramework
                 var result = from c in context.Cars
                              join clr in context.Colors on c.ColorId equals clr.Id
                              join b in context.Brands on c.BrandId equals b.Id
-                             join cimg in context.CarImages on c.CarId equals cimg.CarId
                              where c.ColorId == colorId
                              select new CarDetailDto
                              {
@@ -71,7 +91,6 @@ namespace DataAccess.Concrete.EntityFramework
                                  ColorName = clr.Name,
                                  DailyPrice = c.DailyPrice,
                                  Description = c.Description,
-                                 ImagePath = cimg.ImagePath,
                                  BrandId = c.BrandId,
                                  ColorId = c.ColorId
                              };

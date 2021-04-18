@@ -20,5 +20,9 @@
     <ProjectReference Include="..\RecapCore\RecapCore.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\defaultImage\" />
+  </ItemGroup>
+
 
 </Project>

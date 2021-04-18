@@ -12,11 +12,11 @@ namespace RecapCore.Utility.Helpers
     {
         private static string _currentDirectory = Environment.CurrentDirectory + "\\wwwroot";
         private static string _imagesFolderName = "\\images\\";
-        private static string _logoFolderName = "\\defaultImage\\";
         private static string defaultImagePath = "logo.png";
         public static IResult Add(IFormFile file)
         {
-            string filePath = _currentDirectory + _logoFolderName + defaultImagePath;
+            string filePath = _currentDirectory + _imagesFolderName + defaultImagePath;
+            string savedFilePath = _imagesFolderName + defaultImagePath;
             CheckDirectory();
 
             if (file != null)
@@ -24,14 +24,15 @@ namespace RecapCore.Utility.Helpers
                 var fileType = Path.GetExtension(file.FileName);
                 string imageName = Guid.NewGuid().ToString();
                 filePath = _currentDirectory + _imagesFolderName + imageName + fileType;
+                savedFilePath = _imagesFolderName + imageName + fileType;
                 using (FileStream fs = File.Create(filePath))
                 {
                     file.CopyTo(fs);
                     fs.Flush();
-                    return new SuccessResult(filePath);
+                    return new SuccessResult(savedFilePath);
                 }
             }
-            return new SuccessResult(filePath);
+            return new SuccessResult(savedFilePath);
             
         }
 

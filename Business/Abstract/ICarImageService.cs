@@ -12,6 +12,7 @@ namespace Business.Abstract
         IDataResult<List<CarImage>> GetAll();
         IDataResult<CarImage> GetById(int id);
         IDataResult<List<CarImage>> GetByDate(DateTime date);
+        IDataResult<List<CarImage>> GetByCarId(int carId);
         IResult Add(CarImage carImage, IFormFile file);
         IResult Update(CarImage carImage, IFormFile file);
         IResult Delete(CarImage carImage);
