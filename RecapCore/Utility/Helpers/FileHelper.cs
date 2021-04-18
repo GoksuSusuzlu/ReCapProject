@@ -24,7 +24,7 @@ namespace RecapCore.Utility.Helpers
                 var fileType = Path.GetExtension(file.FileName);
                 string imageName = Guid.NewGuid().ToString();
                 filePath = _currentDirectory + _imagesFolderName + imageName + fileType;
-                savedFilePath = _imagesFolderName + imageName + fileType;
+                savedFilePath = (_imagesFolderName + imageName + fileType).Replace("\\", "/");
                 using (FileStream fs = File.Create(filePath))
                 {
                     file.CopyTo(fs);
